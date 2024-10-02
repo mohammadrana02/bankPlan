@@ -1,0 +1,95 @@
+program requirements
+
+login screen that checks for admin or not
+
+screen for admin:
+    asks if the user wants to search for a customer
+        deposit money from an account
+        withdraw money from an account
+        check account balance
+        view customer details
+        update customer info
+        close their account
+        transfer from one account to another
+    update their own information
+    print all customer details
+    request management report
+        o Total number of customers in the system
+        o The sum of all money the customers currently have in their bank account.
+        o Using individual account balance, the report should calculate the sum of
+        interest rate payable to all accounts for one year, note, if customers have
+        different account types, their rates will vary.
+        o Total amount of overdrafts currently taken by all customers.
+
+-------------------------------------------------------------------------------------------------------------------
+program structure
+
+Login screen
+    - login
+    - password
+
+user dashboard (accessed from login)
+    - customer search (account number) button
+    - update admin information button
+    - show customer details
+    - request management report
+        o Total number of customers in the system
+        o The sum of all money the customers currently have in their bank account.
+        o Using individual account balance, the report should calculate the sum of
+        interest rate payable to all accounts for one year, note, if customers have
+        different account types, their rates will vary.
+        o Total amount of overdrafts currently taken by all customers.
+
+customer search screen (accessed from dashboard)
+    - deposit money into account
+    - withdraw from account
+    - check account balance
+    - view customer details
+    - update customer info
+    - close customer account
+    - transfer from one account to another
+
+
+Three main screen, the rest will be dealt with using pop up boxes
+
+
+----------------------------------------------------------------------------------------------------------------------
+The application must implement all the following:
+Create the necessary classes and functions which allow admins to perform the following
+tasks:
+ Admin Login
+ Search for a particular customer to perform various banking operations on a
+customer bank account i.e. check balance, deposit or withdraw money etc.
+ Deposit money into a customer account.
+ Withdraw money from a customer account.
+ Check current balance for a customer.
+ View customer details e.g. name and address
+ Update customer information e.g. name and address
+To achieve a mark of 51% to maximum of 60%
+The application must implement all the above and the following:
+Create the necessary classes and functions which allow admins to perform the following
+tasks:
+ Close a customer account i.e. remove customer from the system.
+ Update admin own information i.e. name and address.
+ Print all customers details.
+To achieve a mark of 61% to maximum of 70%
+The application must implement all the above and the following:
+ Customers can have different types of bank account. Accounts will differ in their
+name, interest rate and overdraft limit etc.
+ The bank system should be able to store and load all customers’ data from and
+into a file.
+To achieve a mark of 71% to maximum 80%
+The application must implement all the above and the following:
+ Transferring funds/money from one account to another. For example, an Admin
+can transfer funds from one customer account to another customer account.
+ Admins can request a management report. This should show the following
+information:
+o Total number of customers in the system
+The sum of all money the customers currently have in their bank account.
+o Using individual account balance, the report should calculate the sum of
+interest rate payable to all accounts for one year, note, if customers have
+different account types, their rates will vary.
+o Total amount of overdrafts currently taken by all customers.
+To achieve a mark of 80% and over
+ Development of a suitable Graphical User Interface (GUI) to perform all the above
+banking functions.
