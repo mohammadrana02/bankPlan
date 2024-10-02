@@ -110,7 +110,24 @@ def customer_details():
         login_screen()
 
 def management_report():
-    pass
+    # Total number of customers in the system
+    #         o The sum of all money the customers currently have in their bank account.
+    #         o Using individual account balance, the report should calculate the sum of
+    #         interest rate payable to all accounts for one year, note, if customers have
+    #         different account types, their rates will vary.
+    #         o Total amount of overdrafts currently taken by all customers.
+    df = pd.read_csv('users.csv')
+    total_money = df['balance'].sum() # The sum of all money the customers currently have in their accounts.
+    total_overdrafts = df['overdraft'].sum()
 
+    print('Management Report')
+    print(f'Total money: {total_money}')
+    print(f'Overdrafts: {total_overdrafts}')
+
+    option = input('Would you like to go back to admin dashboard? (y/n): ')
+    if option == 'y':
+        admin_screen()
+    else:
+        login_screen()
 
 login_screen()
