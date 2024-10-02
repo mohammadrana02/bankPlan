@@ -1,37 +1,19 @@
 import csv
-
-import pandas
 import pandas as pd
-# this project will use a combination of the pandas and csv packages to handle the user's data
-
 pd.set_option('display.max_columns', None) # so the user's data wont be truncated when it is printed to the console
-
 def login_screen():
     print('Welcome to Rana Bank')
     while True: # keeps the user in a loop until they input the correct information
         username = input("Enter your username: ")
         password = input("Enter your password: ")
 
-        df = pandas.read_csv('users.csv')
-        user_exists = df[(df['username'] == username) & (df['password'] == password)]
+        login_df = pd.read_csv('users.csv') # converts the csv into a pandas dataframe
+        user_exists = login_df[(login_df['username'] == username) & (login_df['password'] == password)] # checks if the username and password match
 
-        if not user_exists.empty:
+        if not user_exists.empty: # if the username and the password are a match
             admin_screen()
         else:
-            print('Username or password incorrect.')
-        # with open('users.csv', mode='r') as file:
-        #     csv_reader = csv.reader(file)
-        #
-        #     # Read and copy all rows into memory
-        #     for row in csv_reader:
-        #         rows.append(row)
-        #
-        # # Search for the row and modify it
-        # for row in rows:
-        #     if row[3] == username and row[4] == password:
-        #         admin_screen()
-        #     else:
-        #         print('Invalid username or password')
+            print('Username or password incorrect.') # if they don't match
 
 def admin_screen():
     print('Welcome to the admin dashboard.')
@@ -43,7 +25,7 @@ def admin_screen():
     while True:
         option = input('What would you like to do? Input a number to make a selection: ')
         if option == '1':
-            acc_num = input("Enter the customer's account number: ")
+            acc_num = int(input("Enter the customer's account number: "))
             customer_options(account_number=acc_num)
             break
         elif option == '2':
@@ -74,25 +56,29 @@ def customer_options(account_number):
         print('8. Logout')
         option = input('What would you like to do? ')
         if option == '1':
-            deposit = input("Enter amount to deposit: ")
-            rows = []
-            with open('users.csv', mode='r') as file:
-                csv_reader = csv.reader(file)
-                # Read and copy all rows into memory
-                for row in csv_reader:
-                    rows.append(row)
+            deposit = int(input("Enter amount to deposit: "))
+            df = pd.read_csv('users.csv')
+            #df.loc[df['column_condition'] == value_to_match, 'column_to_update'] = new_value
+            df.loc[df['account_number'] == account_number, 'balance'] += deposit
+            print(df['account_number'] == account_number, 'balance')
+            df.to_csv('users.csv', index=False)
+            print(f'Transaction successful.')
+            # with open('users.csv', mode='r') as file:
+            #     csv_reader = csv.reader(file)
+            #     # Read and copy all rows into memory
+            #     for row in csv_reader:
+            #         rows.append(row)
+            #
+            # for r in rows:
+            #     if r[0] == account_number:
+            #         r[8] = str(int(r[8]) + int(deposit))
+            #         updated_balance = r[8]
+            #
+            # with open('users.csv', mode='w', newline='') as file: # writes the new balance to the csv file
+            #     csv_writer = csv.writer(file)
+            #     # Write the updated rows (including all rows, not just the modified one)
+            #     csv_writer.writerows(rows)
 
-            for r in rows:
-                if r[0] == account_number:
-                    r[8] = str(int(r[8]) + int(deposit))
-                    updated_balance = r[8]
-
-            with open('users.csv', mode='w', newline='') as file: # writes the new balance to the csv file
-                csv_writer = csv.writer(file)
-                # Write the updated rows (including all rows, not just the modified one)
-                csv_writer.writerows(rows)
-
-                print(f'Transaction successful. New balance: {updated_balance}')
         elif option == '2':
             withdraw = input("Enter amount to withdraw: ")
             rows = []
