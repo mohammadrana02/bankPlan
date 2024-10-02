@@ -1,4 +1,3 @@
-import csv
 import pandas as pd
 pd.set_option('display.max_columns', None) # so the user's data won't be truncated when it is printed to the console
 
@@ -28,19 +27,14 @@ def admin_screen():
         if option == '1':
             acc_num = int(input("Enter the customer's account number: "))
             customer_options(account_number=acc_num)
-            break
         elif option == '2':
             update_admin_info()
-            break
         elif option == '3':
             customer_details()
-            break
         elif option == '4':
             management_report()
-            break
         elif option == '5':
             login_screen()
-            break
         else:
             print('Invalid input.')
 
@@ -67,7 +61,6 @@ def customer_options(account_number):
         elif option == '2':
             withdraw = int(input("Enter amount to withdraw: "))
             df = pd.read_csv('users.csv')
-            # df.loc[df['column_condition'] == value_to_match, 'column_to_update'] = new_value
             df.loc[df['account_number'] == account_number, 'balance'] -= withdraw
             df.to_csv('users.csv', index=False)
             print(f'Withdraw successful.')
@@ -76,26 +69,18 @@ def customer_options(account_number):
             df = pd.read_csv('users.csv')
             current_balance = df.loc[df['account_number'] == account_number, 'balance']
             print(f'Current balance: {current_balance}') # fix output on this one
-        elif option == '4':
-            rows = []
-            with open('users.csv', mode='r') as file:
-                csv_reader = csv.reader(file)
-                # Read and copy all rows into memory
-                for row in csv_reader:
-                    rows.append(row)
 
-            for r in rows:
-                if r[0] == account_number:
-                    print('Account Number:', r[0])
-                    print('First Name:', r[1])
-                    print('Last Name:', r[2])
-                    print('Username:', r[3])
-                    print('Password:', r[4])
-                    print('Address:', r[5])
-                    print('Account Type:', r[6])
-                    print('Interest Rate:', r[7])
-                    print('Balance:', r[8])
-                    print('Overdraft:', r[9])
+        elif option == '4':
+            df = pd.read_csv('users.csv')
+            target_user = df[(df['account_number'] == account_number)]
+
+            if not target_user.empty:
+                for index, row in target_user.iterrows():
+                    for col in df.columns:
+                        print(f"{col}: {row[col]}")
+                else:
+                    print("No matching row found.")
+
         elif option == '5':
             break
         elif option == '6':
@@ -111,19 +96,13 @@ def update_admin_info():
     pass
 
 def customer_details():
-    rows = []
-    with open('users.csv', mode='r') as file:
-        csv_reader = csv.reader(file)
+    df = pd.read_csv('users.csv')
 
-        # Read and copy all rows into memory
-        for row in csv_reader:
-            rows.append(row)
+    for index, row in df.iterrows():
+        for col in df.columns:
+            print(f"{col}: {row[col]}")
+        print()
 
-    # Convert to DataFrame
-    df = pd.DataFrame(rows[1:], columns=rows[0])
-
-    # Display the DataFrame
-    print(df)
     option = input('Would you like to go back to admin dashboard? (y/n): ')
     if option == 'y':
         admin_screen()
