@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
-pd.set_option('display.max_columns', None) # so the user's data wont be truncated when it is printed to the console
+pd.set_option('display.max_columns', None) # so the user's data won't be truncated when it is printed to the console
+
 def login_screen():
     print('Welcome to Rana Bank')
     while True: # keeps the user in a loop until they input the correct information
@@ -70,34 +71,11 @@ def customer_options(account_number):
             df.loc[df['account_number'] == account_number, 'balance'] -= withdraw
             df.to_csv('users.csv', index=False)
             print(f'Withdraw successful.')
-            # rows = []
-            # with open('users.csv', mode='r') as file:
-            #     csv_reader = csv.reader(file)
-            #     # Read and copy all rows into memory
-            #     for row in csv_reader:
-            #         rows.append(row)
-            #
-            # for r in rows:
-            #     if r[0] == account_number:
-            #         r[8] = str(int(r[8]) - int(withdraw))
-            #         new_balance = r[8]
-            #
-            # with open('users.csv', mode='w', newline='') as file: # writes the new balance to the csv file
-            #     csv_writer = csv.writer(file)
-            #     # Write the updated rows (including all rows, not just the modified one)
-            #     csv_writer.writerows(rows)
-            #     print(f'Withdraw successful. New balance: {new_balance}')
-        elif option == '3':
-            rows = []
-            with open('users.csv', mode='r') as file:
-                csv_reader = csv.reader(file)
-                # Read and copy all rows into memory
-                for row in csv_reader:
-                    rows.append(row)
 
-            for r in rows:
-                if r[0] == account_number:
-                    print('Balance:', r[8])
+        elif option == '3':
+            df = pd.read_csv('users.csv')
+            current_balance = df.loc[df['account_number'] == account_number, 'balance']
+            print(f'Current balance: {current_balance}') # fix output on this one
         elif option == '4':
             rows = []
             with open('users.csv', mode='r') as file:
