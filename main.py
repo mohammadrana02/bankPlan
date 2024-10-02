@@ -60,9 +60,17 @@ def customer_options(account_number):
             df = pd.read_csv('users.csv')
             #df.loc[df['column_condition'] == value_to_match, 'column_to_update'] = new_value
             df.loc[df['account_number'] == account_number, 'balance'] += deposit
-            print(df['account_number'] == account_number, 'balance')
             df.to_csv('users.csv', index=False)
-            print(f'Transaction successful.')
+            print(f'Deposit successful.')
+
+        elif option == '2':
+            withdraw = int(input("Enter amount to withdraw: "))
+            df = pd.read_csv('users.csv')
+            # df.loc[df['column_condition'] == value_to_match, 'column_to_update'] = new_value
+            df.loc[df['account_number'] == account_number, 'balance'] -= withdraw
+            df.to_csv('users.csv', index=False)
+            print(f'Withdraw successful.')
+            # rows = []
             # with open('users.csv', mode='r') as file:
             #     csv_reader = csv.reader(file)
             #     # Read and copy all rows into memory
@@ -71,33 +79,14 @@ def customer_options(account_number):
             #
             # for r in rows:
             #     if r[0] == account_number:
-            #         r[8] = str(int(r[8]) + int(deposit))
-            #         updated_balance = r[8]
+            #         r[8] = str(int(r[8]) - int(withdraw))
+            #         new_balance = r[8]
             #
             # with open('users.csv', mode='w', newline='') as file: # writes the new balance to the csv file
             #     csv_writer = csv.writer(file)
             #     # Write the updated rows (including all rows, not just the modified one)
             #     csv_writer.writerows(rows)
-
-        elif option == '2':
-            withdraw = input("Enter amount to withdraw: ")
-            rows = []
-            with open('users.csv', mode='r') as file:
-                csv_reader = csv.reader(file)
-                # Read and copy all rows into memory
-                for row in csv_reader:
-                    rows.append(row)
-
-            for r in rows:
-                if r[0] == account_number:
-                    r[8] = str(int(r[8]) - int(withdraw))
-                    new_balance = r[8]
-
-            with open('users.csv', mode='w', newline='') as file: # writes the new balance to the csv file
-                csv_writer = csv.writer(file)
-                # Write the updated rows (including all rows, not just the modified one)
-                csv_writer.writerows(rows)
-                print(f'Withdraw successful. New balance: {new_balance}')
+            #     print(f'Withdraw successful. New balance: {new_balance}')
         elif option == '3':
             rows = []
             with open('users.csv', mode='r') as file:
