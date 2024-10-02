@@ -1,4 +1,6 @@
 import csv
+
+import pandas
 import pandas as pd
 # this project will use a combination of the pandas and csv packages to handle the user's data
 
@@ -9,20 +11,27 @@ def login_screen():
     while True: # keeps the user in a loop until they input the correct information
         username = input("Enter your username: ")
         password = input("Enter your password: ")
-        rows = []
-        with open('users.csv', mode='r') as file:
-            csv_reader = csv.reader(file)
 
-            # Read and copy all rows into memory
-            for row in csv_reader:
-                rows.append(row)
+        df = pandas.read_csv('users.csv')
+        user_exists = df[(df['username'] == username) & (df['password'] == password)]
 
-        # Search for the row and modify it
-        for row in rows:
-            if row[3] == username and row[4] == password:
-                admin_screen()
-            else:
-                print('Invalid username or password')
+        if not user_exists.empty:
+            admin_screen()
+        else:
+            print('Username or password incorrect.')
+        # with open('users.csv', mode='r') as file:
+        #     csv_reader = csv.reader(file)
+        #
+        #     # Read and copy all rows into memory
+        #     for row in csv_reader:
+        #         rows.append(row)
+        #
+        # # Search for the row and modify it
+        # for row in rows:
+        #     if row[3] == username and row[4] == password:
+        #         admin_screen()
+        #     else:
+        #         print('Invalid username or password')
 
 def admin_screen():
     print('Welcome to the admin dashboard.')
